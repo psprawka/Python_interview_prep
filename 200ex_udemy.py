@@ -980,3 +980,326 @@
 # ip_list = ip.split(".")
 # ip_list_int = list(map(int, ip_list))
 # print(".".join(map(str, ip_list_int)))
+
+
+
+# 70. Find the length of longest non-repeatable substring in a string
+# I'm going to use sliding window pattern - with the help of start and 
+#   end variables, I'm going to go through a string char by char. For 
+#   each character, I check if I already have it in my queue of visited
+#   characters. If no, go further. If yes, update start index.
+#   Time complexity: O(n); Space complexity: O(n)
+
+# from collections import deque
+
+# s, e, max_len = 0, 0, 0
+# str1 = "abcdxyz"
+# queue = deque() 
+
+# while (e < len(str1)):
+#     queue.append(str1[e])
+#     while queue.count(str1[e]) > 1:
+#         queue.popleft()
+#         s += 1
+#     if e - s + 1 > max_len:
+#         max_len = e - s + 1
+#     e += 1
+# print("Max len of longest substring:", max_len)
+
+
+
+# 71. Given a collection of intervals which are already sorted by start number, merge all overlapping intervals.
+# For example,
+# Given [[1,3],[2,6],[5,10],[11,16],[15,18],[19,22]],
+# return [[1, 10], [11, 18], [19, 22]]
+
+# def merge_intervals(items):
+#     int_len = len(intervals)
+#     if int_len < 2:
+#         return items
+#     overlaps = []
+#     start = end = float("inf")
+#     for i in range(int_len):
+#         if start == end == float("inf"):
+#              start, end = items[i]
+#         if i+1 < int_len and items[i][1] >= items[i+1][0]:
+#             end = items[i+1][1]
+#         else:
+#             overlaps.append([start, end])
+#             start = end = float("inf")
+#     return overlaps
+    
+# def merge_intervals(items):
+#     for i in range(len(items)):
+#         while i < len(items)-1 and items[i][1] >= items[i+1][0]:
+#             items[i][1] = items[i+1][1]
+#             del items[i+1]
+#     return items
+    
+# org_intervals = [[1,3], [2,5]]
+# print(merge_intervals(org_intervals))
+
+
+
+# 72. Consider an array of non negative integers. 
+# A second array is formed by shuffling the elements of the first array and deleting a random element.
+# Given these two arrays, find which one is missing in the second array.
+# Input: [1, 2, 3, 4, 5, 5, 6, 7] [3, 7, 2, 1, 4, 6, 5]
+# Output: 5 is the missing number
+
+# def find_missing(org_list, del_list): # for many missing
+#     shared_dict = {}
+#     for item in org_list:
+#         shared_dict[item] = shared_dict.get(item, 0) + 1
+#     for item in del_list:
+#         if shared_dict.get(item) == 1:
+#             del shared_dict[item]
+#         else:
+#             shared_dict[item] -= 1
+#     return list(shared_dict.keys())
+
+# def find_missing2(org_list, del_list): # for one missing
+#     return sum(org_list) - sum(del_list)
+
+# list1 = [1, 2, 3, 4, 5, 5, 6, 7]
+# list2 = [3, 7, 2, 1, 4, 6, 5]
+    
+# print(find_missing2(list1, list2))
+# print(find_missing(list1, list2))
+
+
+
+# 73. Rotate an array of n elements to the right by k steps.
+# For example, with n = 7 and k = 3,
+# the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4].
+# Note:
+# Try to come up as many solutions as you can,
+# there are at least 3 different ways to solve this problem.
+ 
+# def rotate_array(array, k):
+#     print(array[-k:] + array[: len(array) - k])
+    
+# rotate_array([1, 2, 3, 4, 5, 6, 7], 3)
+
+
+
+# 74. Given a sorted integer array without duplicates,
+# return the summary of its ranges.
+# For example, given [0,1,2,4,5,7], return ["0->2","4->5","7"].
+
+# def sum_ranges(nums):
+    # ranges = []
+#     i = 0
+#     while i < len(nums):
+#         s = i
+#         while i < len(nums) - 1 and nums[i] + 1 == nums[i+1]:
+#             i += 1
+#         if (s == i)
+#             ranges.append(str[nums[i])
+#         else:
+#             ranges.append(str(nums[s]) + "->" + str(nums[i]))
+#         i += 1
+#     return ranges
+
+# nums = [0,1,2,4,5,7,8,9,13]
+# print(sum_ranges(nums))
+    
+    
+    
+# 75. Given an array of integers, return indices of the two numbers
+# such that they add up to a specific target.
+# You may assume that each input would have exactly one solution
+# Example:
+#     Given nums = [2, 7, 11, 15], target = 26,
+#     Because nums[2] + nums[3] = 11 + 15 = 26,
+#     return [2, 3].
+
+# def add_two(nums, target):
+#     all_nums = {}
+#     for i in range(len(nums)):
+#         b = all_nums.get(target - nums[i], -1)
+#         if b != -1:
+#             return [b, i]
+#         all_nums[nums[i]] = i
+#     return None
+
+# nums = [2, 7, 11, 15]
+# print(add_two(nums, 13))
+
+
+
+# 76. Write a Python program to sort a list of elements using the bubble sort algorithm.
+
+# def bubble_sort(nums):
+#     for i in range(len(nums)):
+#         for j in range(len(nums) - 1):
+#             if nums[j] > nums[j+1]:
+#                 nums[j], nums[j+1] = nums[j+1], nums[j]
+
+# nums = [6, 4, 2, 3, 1, 5, 3, -6]
+# bubble_sort(nums)
+# print(nums)
+
+
+
+# 77. Write a Python program to sort a list of elements using the insertion sort algorithm.
+
+# def insertion_sort(nums):
+#     for i in range(len(nums)):
+#         j = i
+#         while j > 0 and nums[j] < nums[j-1]:
+#             nums[j-1], nums[j] = nums[j], nums[j-1]
+#             j -= 1
+
+# nums = [6, 4, 2, 3, 1, 5, 3, -6]
+# insertion_sort(nums)
+# print(nums)
+  
+
+
+# 78. Write a Python program to sort a list of elements using the selection sort algorithm.
+
+# def selection_sort(nums):
+#     for i in range(len(nums)):
+#         min = i
+#         for j in range(i, len(nums)):
+#             if nums[min] > nums[j]:
+#                 min = j
+#         nums[i], nums[min] = nums[min], nums[i]
+
+# nums = [6, 4, 2, 3, 1, 5, 3, -6]
+# selection_sort(nums)
+# print(nums)
+
+
+
+# 79. (!) Write a Python program to sort a list of elements using shell sort algorithm.
+# Note : According to Wikipedia "Shell sort or Shell's method, is an in-place comparison sort. 
+# It can be seen as either a generalization of sorting by exchange (bubble sort) or sorting by insertion (insertion sort). 
+# The method starts by sorting pairs of elements far apart from each other, then progressively reducing the gap between
+# elements to be compared. Starting with far apart elements can move some out-of-place elements into position faster than
+# a simple nearest neighbor exchange."
+
+
+
+# 80. (!) Write a Python program to sort a list of elements using the merge sort algorithm.
+# Note: According to Wikipedia "Merge sort (also commonly spelled mergesort) is an O (n log n)
+# comparison-based sorting algorithm. Most implementations produce a stable sort, which means that 
+# the implementation preserves the input order of equal elements in the sorted output."
+# Algorithm:
+# Conceptually, a merge sort works as follows :
+# Divide the unsorted list into n sublists, each containing 1 element (a list of 1 element is considered sorted).
+# Repeatedly merge sublists to produce new sorted sublists until there is only 1 sublist remaining. This will be the sorted list.
+
+
+
+# 81. (!) Write a Python program to sort a list of elements using the quick sort algorithm.
+# Note : According to Wikipedia "Quicksort is a comparison sort, meaning that it can 
+# sort items of any type for which a "less-than" relation (formally, a total order) is defined. 
+# In efficient implementations it is not a stable sort, meaning that the relative order of equal 
+# sort items is not preserved. Quicksort can operate in-place on an array, requiring small additional
+# amounts of memory to perform the sorting."
+
+
+
+# 82. Write a Python program for sequential search.
+# Sequential Search: In computer science, linear search or sequential search is a method for finding a particular value in a list
+# that checks each element in sequence until the desired element is found or the list is exhausted. The list need not be ordered.
+
+# def sequential_search(seq, to_find):
+#     for i in range(len(seq)):
+#         if seq[i] == to_find:
+#             print("Item found")
+#             break
+#     else:
+#         print("Item not found")
+
+# sequential_search(["Pola", "is", 10, ['a', 'b'], "nice"], "nice")
+# sequential_search([1, 50, 43, 20, 75, 30, 21], 30)
+
+
+
+# 83. Write a Python program for binary search. 
+# Binary Search : In computer science, a binary search or half-interval search algorithm finds the position of a target value
+# within a sorted array. The binary search algorithm can be classified as a dichotomies divide-and-conquer search algorithm and 
+# executes in logarithmic time.
+
+# def binary_search(seq, to_find):
+#     s, e = 0, len(seq)
+#     while e - s >= 0:
+#         i = int((e - s) / 2 + s)
+#         if seq[i] == to_find:
+#             return seq[i], i
+#         if seq[i] > to_find:
+#             e = i - 1
+#         else:
+#             s = i + 1
+#     return None
+
+# seq = [1, 10, 15, 16, 23, 42, 43, 46, 50, 51, 54, 55, 56]
+# print(binary_search(seq, 54))
+# print(binary_search(seq, 10))
+# print(binary_search(seq, 5))
+# print(binary_search(seq, 42))
+# print(binary_search(seq, 1))
+# print(binary_search(seq, 56))
+
+
+
+# 84. Write a Python program to calculate the value of 'a' to the power 'b'. 
+
+# def power_of(a, b):
+#     # return a**b 
+#     if a == 0:
+#         return 1
+#     return (pow(a,b))
+# print(power_of(2, 8))
+
+        
+        
+# 85. Write a program to solve the Fibonacci sequence using recursion. 
+
+# def fib(n):
+#     if n == 1 or n == 2:
+#         return 1
+#     return fib(n-1) + fib(n-2)
+# print(fib(4))      
+
+
+    
+# 86. Write a Python program to get the factorial of a non-negative integer.   
+# def factorial(n):
+#     if n == 0:
+#         return 1
+#     return n * factorial(n-1)
+# print(factorial(4))
+
+
+
+# 87. Write a Python program to find the greatest common divisor (gcd) of two integers.
+
+# def gcd(a, b):
+#     low, high = min(a,b), max(a,b)
+#     if low == 0:
+#         return high
+#     return gcd(low, high%low)
+
+# print(gcd(60, 48))
+
+
+
+# 88. Write a Python program to calculate the sum of a list of numbers. (in recursion fashion)
+
+# def sum_list(my_list, n):
+#     if n < 0:
+#         return 0
+#     return my_list[n] + sum_list(my_list, n-1)
+    
+# def sum_list2(my_list):
+#     if len(my_list) == 1:
+#         return my_list[0]
+#     return my_list[0] + sum_list2(my_list[1:])
+    
+# my_list = [1, 5, 8, 3, 4, 0, 7]
+# print(sum_list(my_list, len(my_list) - 1))
+# print(sum_list2(my_list))

@@ -760,21 +760,26 @@
 
 
 
-# 52.(!) Write a Python program to find the three elements that sum to zero from a set (array) of n real numbers.
+# 52. Write a Python program to find the three elements that sum to zero from a set (array) of n real numbers.
 # Input: [-25, -10, -7, -3, 2, 4, 8, 10]
 # Output: [[-10, 2, 8], [-7, -3, 10]] 
 
-# def find_three(numbers, n):
-#     if len_nb = len(numbers) < 3:
-#         return None
-#     sum = numbers[0] + numbers[1] + numbers[2]
-#     for i in range(3, len_nb):
-#         if sum == n:
-#             return numbers[i-3:i]
-#         sum += number[i] - number[i-3]
+# from operator import itemgetter
+
+# def find_three(nums, n):
+#     list_results = []
+#     for i in range(len(nums)):
+#         for j in range(len(nums)):
+#             for k in range(len(nums)):
+#                 if j != k != i and nums[i] + nums[j] + nums[k] == 0:
+#                     new = sorted([nums[i], nums[j], nums[k]])
+#                     if new not in list_results:
+#                         list_results.append(new)
+#     return list_results
 
 # numbers = [-25, -10, -7, -3, 2, 4, 8, 10]
-# find_three(numbers.sort(), 0)
+# numbers.sort()
+# print(find_three(numbers, 0))
 
 
 
@@ -910,13 +915,22 @@
 
 
 
-# 64. (!) Write a Python program to check that a string contains only a certain set of characters (in this case a-z, A-Z and 0-9).
+# 64. Write a Python program to check that a string contains only a certain set of characters (in this case a-z, A-Z and 0-9).
 # Input
 # "ABCDEFabcdef123450"
 # "*&%@#!}{"
 # Output
-# True                                                                                                          
+# True                       
 # False
+
+# def if_only(str1):
+#     x = [x for x in str1 if not x.isdigit() and not x.isalpha()]
+#     return False if len(x) else True
+
+# s1 = "ABCDEFabcdef123450"
+# s2 = "*&%@#!}{"
+# print(s1, "->", if_only(s1))
+# print(s2, "->", if_only(s2))
 
 
 
@@ -950,14 +964,20 @@
 
 
 
-# 67. (!) Write a Python program to remove the parenthesis area in a string.
+# 67. Write a Python program to remove the parenthesis area in a string.
 # Input: ["example (.com)", "w3resource", "github (.com)", "stackoverflow (.com)"]
-# Output
-# example                                                                                                       
-# w3resource                                                                                                    
-# github                                                                                                        
-# stackoverflow 
+# Output: ["example", "w3resource", "github", "stackoverflow"]
 
+# def remove_areas(items):
+#     list_items = []
+#     for string in items:
+#         left = string.find('(')
+#         right = string.find(')')
+#         list_items.append(string[:left] + string[right+1:])
+#     return list_items
+
+# l = ["example (.com)", "w3resource", "github (.com)", "stackoverflow (.com)"]
+# print(remove_areas(l))
 
 
 # 68. Remove all whitespaces from a string.
@@ -1182,23 +1202,145 @@
 
 
 
-# 80. (!) Write a Python program to sort a list of elements using the merge sort algorithm.
-# Note: According to Wikipedia "Merge sort (also commonly spelled mergesort) is an O (n log n)
-# comparison-based sorting algorithm. Most implementations produce a stable sort, which means that 
-# the implementation preserves the input order of equal elements in the sorted output."
-# Algorithm:
-# Conceptually, a merge sort works as follows :
-# Divide the unsorted list into n sublists, each containing 1 element (a list of 1 element is considered sorted).
-# Repeatedly merge sublists to produce new sorted sublists until there is only 1 sublist remaining. This will be the sorted list.
+# 80. Write a Python program to sort a list of elements using the merge sort algorithm.
+
+# def merge(arr, start, end, mid):
+#     i, j = start, mid
+#     arr_temp = []
+#     # print("---\ni: %d, mid: %d, j: %d, end: %d" % (i, mid, j, end))
+#     # print("arr1:", arr[i:mid], "arr2:", arr[mid:end], "\n---")
+#     while i < mid and j < end:
+#         if arr[i] > arr[j]:
+#             arr_temp.append(arr[j])
+#             j += 1
+#         else:
+#             arr_temp.append(arr[i])
+#             i += 1
+#     while i < mid:
+#         arr_temp.append(arr[i])
+#         i += 1
+#     while j < end:
+#         arr_temp.append(arr[j])
+#         j += 1
+#     # print(arr_temp)
+#     arr = arr_temp
+        
+
+# def merge_sort(arr, start, end):
+    
+#     if (start < end):
+#         mid = int((end - start) / 2 + start)
+#         print("MERGE_SORT:        start %d, end %d, mid %d" % (start, end, mid))
+#         print("MERGE_SORT: arr1:", arr[start:mid], "arr2:", arr[mid:end], "\n")
+#         merge_sort(arr, start, mid)
+#         merge_sort(arr, mid + 1, end)
+#         merge(arr, start, end, mid)
+
+
+# def merge(arr, start1, m, r): 
+#     n1 = m - start1 + 1
+#     n2 = r- m 
+  
+#     L = [0] * (n1) 
+#     R = [0] * (n2) 
+  
+#     for i in range(0 , n1): 
+#         L[i] = arr[start1 + i] 
+  
+#     for j in range(0 , n2): 
+#         R[j] = arr[m + 1 + j] 
+  
+#     i = 0 
+#     j = 0
+#     k = start1 
+#     while i < n1 and j < n2 : 
+#         if L[i] <= R[j]: 
+#             arr[k] = L[i] 
+#             i += 1
+#         else: 
+#             arr[k] = R[j] 
+#             j += 1
+#         k += 1
+  
+#     while i < n1: 
+#         arr[k] = L[i] 
+#         i += 1
+#         k += 1
+  
+#     while j < n2: 
+#         arr[k] = R[j] 
+#         j += 1
+#         k += 1
+  
+# # start1 is for left index and r is right index of the 
+# # sub-array of arr to be sorted 
+# def mergeSort(arr,start,mid): 
+#     if start < mid: 
+  
+#         # Same as (start1+r)/2, but avoids overflow for 
+#         # large start1 and h 
+#         middle = (start+(mid-1))/2
+  
+#         # Sort first and second halves 
+#         mergeSort(arr, start, middle) 
+#         mergeSort(arr, middle+1, mid) 
+#         merge(arr, start, middle, r) 
 
 
 
-# 81. (!) Write a Python program to sort a list of elements using the quick sort algorithm.
-# Note : According to Wikipedia "Quicksort is a comparison sort, meaning that it can 
-# sort items of any type for which a "less-than" relation (formally, a total order) is defined. 
-# In efficient implementations it is not a stable sort, meaning that the relative order of equal 
-# sort items is not preserved. Quicksort can operate in-place on an array, requiring small additional
-# amounts of memory to perform the sorting."
+
+
+# def merge(arr, start, end, mid):
+#     i, j = start, mid
+#     arr_temp = []
+#     #print("---\ni: %d, mid: %d, j: %d, end: %d" % (i, mid, j, end))
+#     print("arr1:", arr[i:mid], "arr2:", arr[mid:end], "\n---")
+#     while i < mid and j < end:
+#         if arr[i] > arr[j]:
+#             arr_temp.append(arr[j])
+#             j += 1
+#         else:
+#             arr_temp.append(arr[i])
+#             i += 1
+#     while i < mid:
+#         arr_temp.append(arr[i])
+#         i += 1
+#     while j < end:
+#         arr_temp.append(arr[j])
+#         j += 1
+#     print(arr_temp)
+#     return arr_temp
+        
+
+# def merge_sort(arr):
+    
+#     if (len(arr) > 1):
+#         mid = int(len(arr) / 2)
+#         print("MERGE_SORT ARR: ", arr)
+#         # print("MERGE_SORT:        start %d, end %d, mid %d" % (0, len(arr), mid))
+#         # print("MERGE_SORT: arr1:", arr[:mid], "arr2:", arr[mid:], "\n")
+#         merge_sort(arr[:mid])
+#         merge_sort(arr[mid:])
+#         arr = merge(arr, 0, len(arr), mid)
+#         print("ARR: ", arr)
+    
+# k = [1, 5, 4 , 2, 0, 7]
+# merge_sort(k)
+# print(k)
+    
+
+# def merge_sort(arr, start, end):
+#     mid = int((end - start) / 2)
+#     merge_sort(arr[:mid])
+#     merge_sort(arr[int(arr_len/2):])
+#     merge()
+
+
+
+# 81.(!) Write a Python program to sort a list of elements using the quick sort algorithm.
+
+# def quicksort(arr):
+#     pivot
 
 
 
@@ -1303,3 +1445,21 @@
 # my_list = [1, 5, 8, 3, 4, 0, 7]
 # print(sum_list(my_list, len(my_list) - 1))
 # print(sum_list2(my_list))
+
+
+
+
+
+# nums = [1,2,3,4,5,80,5,5,5,5,5,6,7,8,9,10,11,12,13,14]
+
+# for i in nums[:]:
+#     print("1. i = %d, len(nums): %d" %(i, len(nums)))
+#     if i < 14 and nums[i] == 5:
+#         print("2. REMOVING I = %d" % i)
+#         del nums[i]
+#         i = 1
+#     print("3. i = %d, nums = " % i, nums)
+    
+# for i in nums[:]:
+#     print("1. i = %d, len(nums): %d" %(i, len(nums)))
+#     print(nums[i])
